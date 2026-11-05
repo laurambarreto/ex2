@@ -74,11 +74,11 @@
         <a-box height = "4.9" width = "20" depth = "3.5" rotation = "0 90 0" position = "-10.7 0 0" color = "#000000" static-body></a-box>
 
         <!--Mesa-->
-        <a-box position="6.7 0.5 0" width="0.5" height="0.70" depth="0.1" color="#222222" static-body></a-box>
-        <a-box position="6.7 0.9 0" width="0.9" height="0.1" depth="1.9" color="#333333" rotation="0 0 20" static-body></a-box>
+        <a-box position="6.7 0.35 0" width="0.4" height="0.70" depth="0.1" color="#222222" static-body></a-box>
+        <a-box position="6.7 0.73 0" width="0.9" height="0.1" depth="1.9" color="#333333" rotation="0 0 20" static-body></a-box>
 
         <!-- Painel de Botões -->
-        <a-entity position="6.7 0.9 0" rotation="0 0 20">
+        <a-entity position="6.7 0.73 0" rotation="0 0 20">
             <a-entity position="0 0.05 0" rotation="0 -90 0">
 
                 <a-cylinder id="on-off" class="clickable" sound="src: #sound-click; poolSize: 5" position="-0.6 0.02 -0.2" radius="0.08" height="0.04" color="#ff3333" material="roughness: 0.2"
@@ -144,7 +144,7 @@
         <a-entity cinema-seats="startZ: 1.5"></a-entity>
 
         <!--Câmara e Controlos-->
-        <a-entity id="rig" position="6.25 0 0" rotation="0 -90 0">
+        <a-entity id="rig" position="6.25 0.1 0" rotation="0 -90 0">
             <a-entity camera position="0 1.25 0" look-controls></a-entity>
 
             <a-entity laser-controls="hand: left" raycaster="objects: .clickable; far: 3"></a-entity>

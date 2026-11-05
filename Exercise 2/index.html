@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 2</title>
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aframe-extras@7.2.0/dist/aframe-extras.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+    <script src="javascript/room_bounds.js"></script>
+    <script src="javascript/ui_controller.js"></script>
+    <script src="javascript/screen.js"></script>
+    <script src="javascript/lights.js"></script>
+    <script src="javascript/seats.js"></script>
+</head>
+<body>
+    <a-scene
+        renderer="antialias: true"
+        cursor="rayOrigin: mouse"
+        raycaster="objects: .clickable"
+        ui-controller>
+
+        <a-assets>
+            <img id="floor-texture" src="Textures/Floor/Fabric026_4K-JPG_Color.jpg">
+            <a-asset-item id="cadeira" src="Models/armchair_cinema.glb"></a-asset-item>
+            <a-asset-item id="button" src="Models/red_button.glb"></a-asset-item>
+            <a-asset-item id="arrow" src="Models/arrow.glb"></a-asset-item>
+            <audio id="sound-click" src="Audios/click.wav" preload="auto"></audio>
+        </a-assets>
+
+        <!--Chão-->
+        <a-plane
+            position="0 0 0" 
+            rotation="-90 0 0" 
+            width="20" 
+            height="20" 
+            material="src: #floor-texture; repeat: 10 10; roughness: 0.8;"
+            roughness="0.8" static-body>
+        </a-plane>
+
+        <!--Teto-->
+        <a-plane
+            position="0 5 0" 
+            rotation="90 0 0" 
+            width="20" 
+            height="20" 
+            color="#1a1a1a" static-body>
+        </a-plane>
+
+        <!--Paredes-->
+        <a-plane position="0 2.5 -10" rotation="0 0 0" width="20" height="5" color="#1c1c1c" static-body></a-plane>
+        <a-plane position="0 2.5 10" rotation="0 180 0" width="20" height="5" color="#1c1c1c" static-body></a-plane>
+        <a-plane position="-10 2.5 0" rotation="0 90 0" width="20" height="5" color="#1c1c1c" static-body></a-plane>
+        <a-plane position="10 2.5 0" rotation="0 -90 0" width="20" height="5" color="#FFFFFF" static-body></a-plane>
+
+        <!--Ecrã de cinema-->
+        <a-entity id="cinema-screen" position="9.9 2.5 0" rotation="0 -90 0" visible="false"></a-entity>
+
+        <!--Luzes-->
+        <a-entity id="light-grid"></a-entity>
+
+        <a-light type="ambient" color="#554433" intensity="0.8"></a-light>
+        <a-light type="directional" position="0 4 0" intensity="0.4" color="#ffaa33"></a-light>
+
+        <!--Degraus-->
+        <a-box height = "0.10" width = "20" depth = "3.5" rotation = "0 90 0" position = "3.2 0 0" color = "#000000" static-body></a-box>
+        <a-box height = "0.90" width = "20" depth = "3.5" rotation = "0 90 0" position = "1.7 0 0" color = "#000000" static-body></a-box>
+        <a-box height = "1.7" width = "20" depth = "3.5" rotation = "0 90 0" position = "-0.8 0 0" color = "#000000" static-body></a-box>
+        <a-box height = "2.5" width = "20" depth = "3.5" rotation = "0 90 0" position = "-3.2 0 0" color = "#000000" static-body></a-box>
+        <a-box height = "3.3" width = "20" depth = "3.5" rotation = "0 90 0" position = "-5.7 0 0" color = "#000000" static-body></a-box>
+        <a-box height = "4.1" width = "20" depth = "3.5" rotation = "0 90 0" position = "-8.2 0 0" color = "#000000" static-body></a-box>
+        <a-box height = "4.9" width = "20" depth = "3.5" rotation = "0 90 0" position = "-10.7 0 0" color = "#000000" static-body></a-box>
+
+        <!--Mesa-->
+        <a-box position="6.7 0.5 0" width="0.5" height="0.7" depth="0.1" color="#222222" static-body></a-box>
+
+        <a-box position="6.7 1.0 0" width="1.0" height="0.1" depth="1.9" color="#333333" rotation="0 0 35" static-body></a-box>
+
+        <a-box position="6.7 1.5 0" width="1.2" height="3" depth="2.2" visible="false" static-body></a-box>
+
+        <a-entity position="6.7 1.0 0" rotation="0 0 35">
+
+            <!--Botões-->
+            <a-entity position="0 0.05 0" rotation="0 -90 0">
+
+                <a-cylinder id="on-off" class="clickable" sound="src: #sound-click; poolSize: 5" position="-0.6 0.02 -0.2" radius="0.08" height="0.04" color="#ff3333" material="roughness: 0.2"
+                    animation__enter="property: scale; to: 1.1 1.1 1.1; startEvents: mouseenter; dur: 150"
+                    animation__leave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 150"
+                    animation__press="property: position; to: -0.6 0.005 -0.2; startEvents: mousedown; dur: 50"
+                    animation__release="property: position; to: -0.6 0.02 -0.2; startEvents: mouseup, mouseleave; dur: 50">
+                </a-cylinder>
+                <a-text value="ON/OFF" position="-0.6 0.0 -0.05" rotation="-90 0 0" scale="0.25 0.25 0.25" color="#FFFFFF" align="center"></a-text>
+
+                <a-cylinder id="btn-back" class="clickable" sound="src: #sound-click; poolSize: 5" position="-0.3 0.02 0.2" radius="0.08" height="0.04" color="#ffaa00" material="roughness: 0.2"
+                    animation__enter="property: scale; to: 1.1 1.1 1.1; startEvents: mouseenter; dur: 150"
+                    animation__leave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 150"
+                    animation__press="property: position; to: -0.3 0.005 0.2; startEvents: mousedown; dur: 50"
+                    animation__release="property: position; to: -0.3 0.02 0.2; startEvents: mouseup, mouseleave; dur: 50">
+                </a-cylinder>
+                <a-text value="VOLTAR" position="-0.3 0.0 0.35" rotation="-90 0 0" scale="0.25 0.25 0.25" color="#FFFFFF" align="center"></a-text>
+                
+                <a-entity id="btn-ok" class="clickable" sound="src: #sound-click; poolSize: 5" geometry="primitive: cylinder; radius: 0.1; height: 0.04" material="color: #00ffff; roughness: 0.2" position="0.2 0.02 0"
+                    animation__enter="property: scale; to: 1.1 1.1 1.1; startEvents: mouseenter; dur: 150"
+                    animation__leave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 150"
+                    animation__press="property: position; to: 0.2 0.005 0; startEvents: mousedown; dur: 50"
+                    animation__release="property: position; to: 0.2 0.02 0; startEvents: mouseup, mouseleave; dur: 50">
+                    <a-text value="OK" align="center" position="0 0.03 0" rotation="-90 0 0" scale="0.3 0.3 0.3" color="#000000" align="center"></a-text>
+                </a-entity>
+
+                <a-box id="arrow-up" class="clickable" sound="src: #sound-click; poolSize: 5" rotation="0 -180 0" width="0.15" height="0.04" depth="0.15" color="#4488ff" position="0.2 0.02 -0.3"
+                    animation__enter="property: scale; to: 1.1 1.1 1.1; startEvents: mouseenter; dur: 150"
+                    animation__leave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 150"
+                    animation__press="property: position; to: 0.2 0.005 -0.3; startEvents: mousedown; dur: 50"
+                    animation__release="property: position; to: 0.2 0.02 -0.3; startEvents: mouseup, mouseleave; dur: 50">
+                </a-box>
+                <a-text value="v" position="0.2 0.05 -0.3" rotation="-90 180 0" scale="0.5 0.5 0.5" color="#FFFFFF" align="center"></a-text>
+
+                <a-box id="arrow-down" class="clickable" sound="src: #sound-click; poolSize: 5" width="0.15" height="0.04" depth="0.15" color="#4488ff" position="0.2 0.02 0.3"
+                    animation__enter="property: scale; to: 1.1 1.1 1.1; startEvents: mouseenter; dur: 150"
+                    animation__leave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 150"
+                    animation__press="property: position; to: 0.2 0.005 0.3; startEvents: mousedown; dur: 50"
+                    animation__release="property: position; to: 0.2 0.02 0.3; startEvents: mouseup, mouseleave; dur: 50">
+                </a-box>
+                <a-text value="v" position="0.2 0.05 0.3" rotation="-90 0 0" scale="0.5 0.5 0.5" color="#FFFFFF" align="center"></a-text>
+
+                <a-box id="arrow-left" class="clickable" sound="src: #sound-click; poolSize: 5" width="0.15" height="0.04" depth="0.15" color="#4488ff" position="-0.1 0.02 0"
+                    animation__enter="property: scale; to: 1.1 1.1 1.1; startEvents: mouseenter; dur: 150"
+                    animation__leave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 150"
+                    animation__press="property: position; to: -0.1 0.005 0; startEvents: mousedown; dur: 50"
+                    animation__release="property: position; to: -0.1 0.02 0; startEvents: mouseup, mouseleave; dur: 50">
+                </a-box>
+                <a-text value="<" position="-0.1 0.05 0" rotation="-90 0 0" scale="0.5 0.5 0.5" color="#FFFFFF" align="center"></a-text>
+
+                <a-box id="arrow-right" class="clickable" sound="src: #sound-click; poolSize: 5" width="0.15" height="0.04" depth="0.15" color="#4488ff" position="0.5 0.02 0"
+                    animation__enter="property: scale; to: 1.1 1.1 1.1; startEvents: mouseenter; dur: 150"
+                    animation__leave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 150"
+                    animation__press="property: position; to: 0.5 0.005 0; startEvents: mousedown; dur: 50"
+                    animation__release="property: position; to: 0.5 0.02 0; startEvents: mouseup, mouseleave; dur: 50">
+                </a-box>
+                <a-text value=">" position="0.5 0.05 0" rotation="-90 0 0" scale="0.5 0.5 0.5" color="#FFFFFF" align="center"></a-text>
+            </a-entity>
+        </a-entity>
+
+        <!--Cadeiras-->
+        <a-entity cinema-seats="startZ: -9.7"></a-entity>
+        <a-entity cinema-seats="startZ: 1.5"></a-entity>
+
+        <!-- Comandos -->
+        <a-entity laser-controls="hand: left" raycaster="objects: .clickable; far: 5"></a-entity>
+        <a-entity laser-controls="hand: right" raycaster="objects: .clickable; far: 5"></a-entity>
+
+        <!-- Handtracking -->
+        <a-entity id="leftHand" hand-tracking-controls="hand: left; modelStyle: mesh;" sphere-collider="objects: .clickable" super-hands></a-entity>
+        <a-entity id="rightHand" hand-tracking-controls="hand: right; modelStyle: mesh;" sphere-collider="objects: .clickable" super-hands></a-entity>
+
+        <!--Câmara-->
+        <a-entity camera position="5.8 1.6 0" rotation="0 -90 0" look-controls></a-entity>
+
+    </a-scene>
+</body>
+</html>

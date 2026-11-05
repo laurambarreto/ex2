@@ -16,7 +16,7 @@
 </head>
 <body>
     <a-scene
-        webxr="optionalFeatures: hand-tracking"
+        webxr="optionalFeatures: hand-tracking; referenceSpaceType: local-floor"
         renderer="antialias: true"
         cursor="rayOrigin: mouse"
         raycaster="objects: .clickable"
@@ -144,12 +144,20 @@
         <a-entity cinema-seats="startZ: 1.5"></a-entity>
 
         <!--Câmara e Controlos-->
-        <a-entity id="rig" position="6 0 0" rotation="0 -90 0">
+        <a-entity id="rig" position="6.25 0 0" rotation="0 -90 0">
             <a-entity camera position="0 1.25 0" look-controls></a-entity>
-            <a-entity laser-controls="hand: left" raycaster="objects: .clickable; far: 5"></a-entity>
-            <a-entity laser-controls="hand: right" raycaster="objects: .clickable; far: 5"></a-entity>
-            <a-entity id="leftHand" hand-tracking-controls="hand: left; modelStyle: mesh;" sphere-collider="objects: .clickable" super-hands></a-entity>
-            <a-entity id="rightHand" hand-tracking-controls="hand: right; modelStyle: mesh;" sphere-collider="objects: .clickable" super-hands></a-entity>
+
+            <a-entity laser-controls="hand: left" raycaster="objects: .clickable; far: 3"></a-entity>
+            <a-entity laser-controls="hand: right" raycaster="objects: .clickable; far: 3"></a-entity>
+
+            <a-entity hand-tracking-controls="hand: left; modelStyle: mesh;"
+                      raycaster="objects: .clickable; far: 2; showLine: true; lineColor: #00ffff"
+                      cursor="downEvents: pinchstarted; upEvents: pinchended">
+            </a-entity>
+            <a-entity hand-tracking-controls="hand: right; modelStyle: mesh;"
+                      raycaster="objects: .clickable; far: 2; showLine: true; lineColor: #00ffff"
+                      cursor="downEvents: pinchstarted; upEvents: pinchended">
+            </a-entity>
         </a-entity>
 
     </a-scene>

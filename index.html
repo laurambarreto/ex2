@@ -147,16 +147,16 @@
         <a-entity id="rig" position="6.25 0.1 0" rotation="0 -90 0">
             <a-entity camera position="0 1.25 0" look-controls></a-entity>
 
-            <a-entity laser-controls="hand: left" raycaster="objects: .clickable; far: 3"></a-entity>
-            <a-entity laser-controls="hand: right" raycaster="objects: .clickable; far: 3"></a-entity>
+                <a-entity laser-controls="hand: left" raycaster="objects: .clickable; far: 3"></a-entity>
+                <a-entity laser-controls="hand: right" raycaster="objects: .clickable; far: 3"></a-entity>
 
-            <a-entity hand-tracking-controls="hand: left; modelStyle: mesh;"
-                      raycaster="objects: .clickable; far: 2; showLine: true; lineColor: #00ffff"
-                      cursor="downEvents: pinchstarted; upEvents: pinchended">
-            </a-entity>
-            <a-entity hand-tracking-controls="hand: right; modelStyle: mesh;"
-                      raycaster="objects: .clickable; far: 2; showLine: true; lineColor: #00ffff"
-                      cursor="downEvents: pinchstarted; upEvents: pinchended">
+                <a-entity hand-tracking-controls="hand: left; modelStyle: mesh;" 
+                        finger-touch>
+                </a-entity>
+
+                <a-entity hand-tracking-controls="hand: right; modelStyle: mesh;" 
+                        finger-touch>
+                </a-entity>
             </a-entity>
         </a-entity>
 

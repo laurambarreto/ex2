@@ -137,7 +137,7 @@ function buildScreenUI(screen, isOn, viewMode, mediaItems, currentPage, focusInd
         
         if (currentItem.type === 'image') {
             let img = document.createElement('a-image');
-            img.setAttribute('src', currentItem.src);
+            img.setAttribute('src', currentItem.fullSrc || currentItem.src);
             img.setAttribute('width', '5.5');
             img.setAttribute('height', '2.8');
             img.setAttribute('position', '0 0.2 0.05');

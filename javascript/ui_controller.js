@@ -10,7 +10,12 @@ AFRAME.registerComponent('ui-controller', {
         var totalVideos = 6;
         
         for (var i = 1; i <= totalImages; i++) {
-            mediaItems.push({type: 'image', src: 'Images/image' + i + '.jpg', name: 'Imagem ' + i});
+            mediaItems.push({
+            type: 'image',
+            src: 'Images/image' + i + '.jpg',
+            fullSrc: 'Images/image' + i + '.png',
+            name: 'Imagem ' + i
+            });
         }
         for (var i = 1; i <= totalVideos; i++) {
             mediaItems.push({type: 'video', src: 'Videos/video' + i + '.mp4', name: 'Video ' + i, poster: 'Images/thumb' + i + '.png'});

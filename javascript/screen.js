@@ -98,7 +98,7 @@ function buildScreenUI(screen, isOn, viewMode, mediaItems, currentPage, focusInd
             btnPrev.setAttribute('width', '2.0');
             btnPrev.setAttribute('height', '0.4');
             btnPrev.setAttribute('position', `${coords[4].x} ${coords[4].y} 0.045`);
-            btnPrev.setAttribute('color', focusIndex === 4 ? '#95b3f9' : '#ffffff');
+            btnPrev.setAttribute('color', focusIndex === 4 ? '#ffffff' : '#ffffff');
             btnPrev.setAttribute('shader', 'flat');
             
             let textPrev = document.createElement('a-text');
@@ -117,7 +117,7 @@ function buildScreenUI(screen, isOn, viewMode, mediaItems, currentPage, focusInd
             btnNext.setAttribute('width', '2.0');
             btnNext.setAttribute('height', '0.4');
             btnNext.setAttribute('position', `${coords[5].x} ${coords[5].y} 0.045`);
-            btnNext.setAttribute('color', focusIndex === 5 ? '#95b3f9' : '#ffffff');
+            btnNext.setAttribute('color', focusIndex === 5 ? '#ffffff' : '#ffffff');
             btnNext.setAttribute('shader', 'flat');
 
             let textNext = document.createElement('a-text');

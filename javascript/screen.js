@@ -8,15 +8,18 @@ function buildScreenUI(screen, isOn, viewMode, mediaItems, currentPage, focusInd
     screen.setAttribute('visible', 'true');
     screen.innerHTML = '';
 
+    // Fundo do ecrã
     let bg = document.createElement('a-plane');
     bg.setAttribute('width', '6.5');
     bg.setAttribute('height', '3.8');
     bg.setAttribute('material', 'color: #add8e6; shader: flat');
     screen.appendChild(bg);
 
+    // Modo em Galeria com lista de vídeos e imagens
     if (viewMode === 'gallery') {
         let totalPages = Math.ceil(mediaItems.length / 4);
-        
+
+        // Título
         let title = document.createElement('a-text');
         title.setAttribute('value', `Galeria`);
         title.setAttribute('position', '0 1.6 0.05');
@@ -26,6 +29,7 @@ function buildScreenUI(screen, isOn, viewMode, mediaItems, currentPage, focusInd
         title.setAttribute('color', '#000000');
         screen.appendChild(title);
 
+        // Coordenadas dos elementos da lista
         const coords = [
             {x: -1.5, y: 0.7},
             {x: 1.5, y: 0.7},
@@ -35,6 +39,7 @@ function buildScreenUI(screen, isOn, viewMode, mediaItems, currentPage, focusInd
             {x: 1.5, y: -1.5}
         ];
 
+        // Borda do elemento selecionado
         let border = document.createElement('a-plane');
         border.setAttribute('width', focusIndex >= 4 ? '2.2' : '2.1'); 
         border.setAttribute('height', focusIndex >= 4 ? '0.5' : '1.0');
@@ -43,6 +48,7 @@ function buildScreenUI(screen, isOn, viewMode, mediaItems, currentPage, focusInd
         border.setAttribute('shader', 'flat');
         screen.appendChild(border);
 
+        // Posiciona os elementos da lista
         let startIndex = currentPage * 4;
         for (let i = 0; i < 4; i++) {
             let globalIndex = startIndex + i;
@@ -55,6 +61,7 @@ function buildScreenUI(screen, isOn, viewMode, mediaItems, currentPage, focusInd
                 screen.appendChild(itemGroup);
 
                 if (item.type === 'image') {
+                    // Preview da imagem na galeria
                     let thumbImg = document.createElement('a-image');
                     thumbImg.setAttribute('src', item.src);
                     thumbImg.setAttribute('width', '2.0');
@@ -64,6 +71,7 @@ function buildScreenUI(screen, isOn, viewMode, mediaItems, currentPage, focusInd
                     itemGroup.appendChild(thumbImg);
 
                 } else if (item.type === 'video') {
+                    // Thumbnail do vídeo na galeria
                     let vidBox = document.createElement('a-image');
                     vidBox.setAttribute('src', item.poster);
                     vidBox.setAttribute('width', '2.0');
@@ -73,6 +81,7 @@ function buildScreenUI(screen, isOn, viewMode, mediaItems, currentPage, focusInd
                     vidBox.setAttribute('material', 'shader: flat');
                     itemGroup.appendChild(vidBox);
 
+                    // Ícone de play em cima dos vídeos
                     let vidIcon = document.createElement('a-image');
                     vidIcon.setAttribute('src', 'Images/play.png');
                     vidIcon.setAttribute('position', `${x} ${y} 0.08`);
@@ -92,7 +101,8 @@ function buildScreenUI(screen, isOn, viewMode, mediaItems, currentPage, focusInd
                 itemGroup.appendChild(nameText);
             }
         }
-
+        
+        // Se não for a primeira página mete botão de Anterior
         if (currentPage > 0) {
             let btnPrev = document.createElement('a-plane');
             btnPrev.setAttribute('width', '2.0');
@@ -112,6 +122,7 @@ function buildScreenUI(screen, isOn, viewMode, mediaItems, currentPage, focusInd
             screen.appendChild(btnPrev);
         }
 
+        // Se não for a última página mete botão de Próximo
         if (currentPage < totalPages - 1) {
             let btnNext = document.createElement('a-plane');
             btnNext.setAttribute('width', '2.0');
@@ -131,6 +142,7 @@ function buildScreenUI(screen, isOn, viewMode, mediaItems, currentPage, focusInd
             screen.appendChild(btnNext);
         }
 
+    // Modo em fullscreen
     } else if (viewMode === 'fullscreen') {
         let globalIndex = (currentPage * 4) + focusIndex;
         let currentItem = mediaItems[globalIndex];
@@ -142,7 +154,9 @@ function buildScreenUI(screen, isOn, viewMode, mediaItems, currentPage, focusInd
             img.setAttribute('height', '2.8');
             img.setAttribute('position', '0 0.2 0.05');
             screen.appendChild(img);
+
         } else if (currentItem.type === 'video') {
+            // Reprodução contínua
             let videoAssetId = 'dyn-vid-' + globalIndex;
             let assetsEl = document.querySelector('a-assets');
             
@@ -156,6 +170,7 @@ function buildScreenUI(screen, isOn, viewMode, mediaItems, currentPage, focusInd
                 assetsEl.appendChild(videoEl);
             }
 
+            // Projeção do vídeo no ecrã de cinema
             let vidScreen = document.createElement('a-video');
             vidScreen.setAttribute('src', '#' + videoAssetId);
             vidScreen.setAttribute('width', '5.5');

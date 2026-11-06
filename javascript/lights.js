@@ -1,6 +1,8 @@
+// Adiciona as luzes ao cenário da sala
 document.addEventListener ("DOMContentLoaded", function(){
     const container = document.getElementById ('light-grid');
 
+    // Posições das luzes
     const x = [-5, 5];
     const z = [-5, 0, 5];
     const y = 4.9;

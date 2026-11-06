@@ -1,3 +1,4 @@
+// Função para adicionar as cadeiras do cenário à sala
 AFRAME.registerComponent('cinema-seats', {
     schema: {
       startZ: { type: 'number', default: -9.7 }

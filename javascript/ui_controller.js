@@ -1,7 +1,7 @@
 AFRAME.registerComponent('ui-controller', {
     init: function () {
-        let isOn = false;
-        let viewMode = 'gallery';
+        let isOn = false; // Ecrã ligado ou desligado
+        let viewMode = 'gallery'; // Modo atual
         let currentPage = 0;
         let focusIndex = 0;
 
@@ -9,6 +9,7 @@ AFRAME.registerComponent('ui-controller', {
         var totalImages = 6;
         var totalVideos = 6;
         
+        // Percorrer as várias imagens (fullSrc) e as suas thumbs (src) e meter na lista
         for (var i = 1; i <= totalImages; i++) {
             mediaItems.push({
             type: 'image',
@@ -17,6 +18,8 @@ AFRAME.registerComponent('ui-controller', {
             name: 'Imagem ' + i
             });
         }
+
+        // Percorrer os vídeos e adicionar juntamente com a sua thumbnail à lista
         for (var i = 1; i <= totalVideos; i++) {
             mediaItems.push({type: 'video', src: 'Videos/video' + i + '.mp4', name: 'Video ' + i, poster: 'Images/thumb' + i + '.png'});
         }
@@ -30,6 +33,7 @@ AFRAME.registerComponent('ui-controller', {
         var arrowLeft = document.querySelector('#arrow-left');
         var arrowRight = document.querySelector('#arrow-right');
 
+        // Hover e clicks
         function setupButton(el, hoverScale, normalScale, onClickCallback) {
             if (!el) return;
             el.addEventListener('mouseenter', function () { el.setAttribute('scale', hoverScale); });
@@ -37,10 +41,12 @@ AFRAME.registerComponent('ui-controller', {
             if (onClickCallback) { el.addEventListener('click', onClickCallback); }
         }
 
+        // Função que atualiza ecrã
         function updateScreen() {
             buildScreenUI(screenEl, isOn, viewMode, mediaItems, currentPage, focusIndex);
         }
 
+        // Botão On/Off
         setupButton(wrapOnOff, '1.1 1.1 1.1', '1.0 1.0 1.0', function () {
             wrapOnOff.components.sound.playSound();
             isOn = !isOn;
@@ -50,6 +56,7 @@ AFRAME.registerComponent('ui-controller', {
             updateScreen();
         });
 
+        // Botão Ok
         setupButton(btnOk, '1.1 1.1 1.1', '1.0 1.0 1.0', function () {
             btnOk.components.sound.playSound();
             if (!isOn) return;
@@ -62,6 +69,7 @@ AFRAME.registerComponent('ui-controller', {
                         viewMode = 'fullscreen';
                         updateScreen();
                     }
+
                 } else if (focusIndex === 4 && currentPage > 0) {
                     currentPage--;
                     focusIndex = 0;
@@ -74,6 +82,7 @@ AFRAME.registerComponent('ui-controller', {
             }
         });
 
+        // Botão para voltar do ecrã inteiro para a galeria
         setupButton(btnBack, '1.1 1.1 1.1', '1.0 1.0 1.0', function () {
             btnBack.components.sound.playSound();
             if (!isOn) return;
@@ -83,6 +92,7 @@ AFRAME.registerComponent('ui-controller', {
             }
         });
 
+        // Botão seta para cima
         setupButton(arrowUp, '1.2 1.2 1.2', '1.0 1.0 1.0', function () {
             arrowUp.components.sound.playSound();
             if (!isOn || viewMode !== 'gallery') return;
@@ -90,6 +100,7 @@ AFRAME.registerComponent('ui-controller', {
             updateScreen();
         });
 
+        // Botão seta para baixo
         setupButton(arrowDown, '1.2 1.2 1.2', '1.0 1.0 1.0', function () {
             arrowDown.components.sound.playSound();
             if (!isOn || viewMode !== 'gallery') return;
@@ -97,6 +108,7 @@ AFRAME.registerComponent('ui-controller', {
             updateScreen();
         });
 
+        // Botão seta para a esquerda
         setupButton(arrowLeft, '1.2 1.2 1.2', '1.0 1.0 1.0', function () {
             arrowLeft.components.sound.playSound();
             if (!isOn || viewMode !== 'gallery') return;
@@ -104,6 +116,7 @@ AFRAME.registerComponent('ui-controller', {
             updateScreen();
         });
 
+        // Botão seta para a direita
         setupButton(arrowRight, '1.2 1.2 1.2', '1.0 1.0 1.0', function () {
             arrowRight.components.sound.playSound();
             if (!isOn || viewMode !== 'gallery') return;
